@@ -17,7 +17,7 @@ namespace Dealer.Controllers
             _IConfiguration = configuration;
             _httpClientFactory = httpClientFactory;
         }
-
+         
         public async Task<IActionResult> Index()
         {
             var viewModel = new List<PropertyCategoryViewModel>();
