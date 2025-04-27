@@ -1,0 +1,319 @@
+﻿@model List<PropertyCategoryViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer LocalizationManager;
+@{
+    var IsEnlish = System.Globalization.CultureInfo.CurrentCulture.Name.StartsWith("ar") ? false : true;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Untree.co" />
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.png")" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap5" />
+
+
+
+</head>
+<body>
+
+
+    <div class="hero">
+        <div class="hero-slide">
+
+            <div class="img overlay"
+                 style="background-image: url('@Url.Content("~/images/hero_bg_3.jpg")')"></div>
+            <div class="img overlay"
+                 style="background-image: url('@Url.Content("~/images/hero_bg_2.jpg")')"></div>
+            <div class="img overlay"
+                 style="background-image: url('@Url.Content("~/images/hero_bg_1.jpg")')"></div>
+        </div>
+
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-9 text-center">
+                    <h1 class="heading" data-aos="fade-up">
+                        @LocalizationManager["Yourtrustedpartner"]
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row mb-5 align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="font-weight-bold text-primary heading">
+                        @LocalizationManager["PopularProperties"]
+                    </h2>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <p>
+                        <a href="#"
+                           target="_blank"
+                           class="btn btn-primary text-white py-3 px-4">
+                            @LocalizationManager["Viewallproperties"]
+
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="property-slider-wrap">
+                        <div class="property-slider">
+                            @foreach (var category in Model)
+                            {
+                                var base64Image = category.Image != null
+                                ? $"data:image/jpeg;base64,{Convert.ToBase64String(category.Image)}"
+                                : Url.Content("~/images/placeholder.jpg");
+                                var categoryName = IsEnlish ? category.NameEn : category.NameAr;
+                                <div class="property-item">
+                                    <a href="property-single.html" class="img">
+                                        <img src="@base64Image" alt="Image" class="img-fluid" />
+                                    </a>
+                                    <div class="property-content text-center">
+                                        <h5 class="category-title">@categoryName</h5>
+
+                                        <a href="@Url.Action("Items", "Home", new { encId = category.EncryptedId })" class="btn btn-primary py-2 px-3">
+                                            @("View " + categoryName)
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div id="property-nav"
+                             class="controls"
+                             tabindex="0"
+                             aria-label="Carousel Navigation">
+                            <span class="prev"
+                                  data-controls="prev"
+                                  aria-controls="property"
+                                  tabindex="-1">Prev</span>
+                            <span class="next"
+                                  data-controls="next"
+                                  aria-controls="property"
+                                  tabindex="-1">Next</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="features-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="box-feature">
+                        <span class="flaticon-house"></span>
+                        <h3 class="mb-3">@LocalizationManager["OurProperties"]</h3>
+                        <p>@LocalizationManager["OurPropertiesDesc"]</p>
+                        <p><a href="#" class="learn-more">@LocalizationManager["LearnMore"]</a></p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
+                    <div class="box-feature">
+                        <span class="flaticon-building"></span>
+                        <h3 class="mb-3">@LocalizationManager["PropertyForSale"]</h3>
+                        <p>@LocalizationManager["PropertyForSaleDesc"]</p>
+                        <p><a href="#" class="learn-more">@LocalizationManager["LearnMore"]</a></p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="box-feature">
+                        <span class="flaticon-house-3"></span>
+                        <h3 class="mb-3">@LocalizationManager["RealEstateAgent"]</h3>
+                        <p>@LocalizationManager["RealEstateAgentDesc"]</p>
+                        <p><a href="#" class="learn-more">@LocalizationManager["LearnMore"]</a></p>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
+                    <div class="box-feature">
+                        <span class="flaticon-house-1"></span>
+                        <h3 class="mb-3">@LocalizationManager["HouseForSale"]</h3>
+                        <p>@LocalizationManager["HouseForSaleDesc"]</p>
+                        <p><a href="#" class="learn-more">@LocalizationManager["LearnMore"]</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <div class="section section-4 bg-light directionrtl">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-5">
+                    <h2 class="font-weight-bold heading text-primary mb-4">
+                        @LocalizationManager["FindYourPerfectHome"]
+                    </h2>
+                    <p class="text-black-50">
+                        @LocalizationManager["HomeIntroText"]
+                    </p>
+                </div>
+            </div>
+            <div class="row justify-content-between mb-5">
+                <div class="col-lg-7 mb-5 mb-lg-0 order-lg-2">
+                    <div class="img-about dots">
+                        <img src="@Url.Content("~/images/hero_bg_3.jpg")" alt="Image" class="img-fluid" />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex feature-h">
+                        <span class="wrap-icon me-3">
+                            <span class="icon-home2"></span>
+                        </span>
+                        <div class="feature-text">
+                            <h3 class="heading">@LocalizationManager["HouseForSale"]</h3>
+                            <p class="text-black-50">
+                                @LocalizationManager["HouseForSaleDesc"]
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex feature-h">
+                        <span class="wrap-icon me-3">
+                            <span class="icon-person"></span>
+                        </span>
+                        <div class="feature-text">
+                            <h3 class="heading">@LocalizationManager["TopRatedAgents"]</h3>
+                            <p class="text-black-50">
+                                @LocalizationManager["TopRatedAgentsDesc"]
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex feature-h">
+                        <span class="wrap-icon me-3">
+                            <span class="icon-security"></span>
+                        </span>
+                        <div class="feature-text">
+                            <h3 class="heading">@LocalizationManager["LegitProperties"]</h3>
+                            <p class="text-black-50">
+                                @LocalizationManager["LegitPropertiesDesc"]
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row section-counter mt-5">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="counter-wrap mb-5 mb-lg-0">
+                        <span class="number"><span class="countup text-primary">3298</span></span>
+                        <span class="caption text-black-50">@LocalizationManager["BuyPropertiesCount"]</span>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="counter-wrap mb-5 mb-lg-0">
+                        <span class="number"><span class="countup text-primary">2181</span></span>
+                        <span class="caption text-black-50">@LocalizationManager["SellPropertiesCount"]</span>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
+                    <div class="counter-wrap mb-5 mb-lg-0">
+                        <span class="number"><span class="countup text-primary">9316</span></span>
+                        <span class="caption text-black-50">@LocalizationManager["AllPropertiesCount"]</span>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
+                    <div class="counter-wrap mb-5 mb-lg-0">
+                        <span class="number"><span class="countup text-primary">7191</span></span>
+                        <span class="caption text-black-50">@LocalizationManager["AgentsCount"]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section">
+        <div class="row justify-content-center footer-cta" data-aos="fade-up">
+            <div class="col-lg-7 mx-auto text-center">
+                <h2 class="mb-4">@LocalizationManager["JoinRealEstateAgents"]</h2>
+                <p>
+                    <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">
+                        @LocalizationManager["ApplyRealEstateAgent"]
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="widget">
+                        <h3>@LocalizationManager["Contact"]</h3>
+                        <address>@LocalizationManager["Address"]</address>
+                        <ul class="list-unstyled links">
+                            <li><a href="tel:962791131457">+962791131457</a></li>
+                            <li><a href="tel:962797689245">+962797689245</a></li>
+                            <li><a href="mailto:info@mydomain.com">Dealer@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="widget">
+                        <h3>@LocalizationManager["Sources"]</h3>
+                        <ul class="list-unstyled float-start links">
+                            <li><a href="#">@LocalizationManager["AboutUs"]</a></li>
+                            <li><a href="#">@LocalizationManager["Services"]</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="widget">
+                        <h3>@LocalizationManager["Links"]</h3>
+                        <ul class="list-unstyled links">
+                            <li><a href="#">@LocalizationManager["AboutUs"]</a></li>
+                            <li><a href="#">@LocalizationManager["ContactUs"]</a></li>
+                        </ul>
+
+                        <ul class="list-unstyled social">
+                            <li><a href="#"><span class="icon-instagram"></span></a></li>
+                            <li><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                            <li><a href="#"><span class="icon-pinterest"></span></a></li>
+                            <li><a href="#"><span class="icon-dribbble"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p>
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script>
+                    . @LocalizationManager["AllRightsReserved"]
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="overlayer"></div>
+    <div class="loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">@LocalizationManager["Loading"]</span>
+        </div>
+    </div>
+
+    <script src="@Url.Content("~/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/js/tiny-slider.js")"></script>
+    <script src="@Url.Content("~/js/aos.js")"></script>
+    <script src="@Url.Content("~/js/navbar.js")"></script>
+    <script src="@Url.Content("~/js/counter.js")"></script>
+    <script src="@Url.Content("~/js/custom.js")"></script>
+</body>
+</html>

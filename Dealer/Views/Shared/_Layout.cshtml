@@ -1,0 +1,105 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer LocalizationManager;
+@{
+    var IsEnlish = System.Globalization.CultureInfo.CurrentCulture.Name.StartsWith("ar") ? false : true;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dealer</title>
+    <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="@Url.Content("~/fonts/icomoon/style.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/fonts/flaticon/font/flaticon.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/aos.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/tiny-slider.css")" rel="stylesheet" />
+    @if (IsEnlish)
+    {
+            <link href="@Url.Content("~/css/style.css")" rel="stylesheet" />
+    }
+    else
+    {
+            <link href="@Url.Content("~/css/styleAr.css")" rel="stylesheet" />
+    }
+</head>
+<body>
+    <header>
+        <div class="site-mobile-menu site-navbar-target">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close">
+                    <span class="icofont-close js-menu-toggle"></span>
+                </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+        <div>
+            <nav class="site-nav">
+                <div class="container">
+                    <div class="menu-bg-wrap">
+                        <div class="site-navigation">
+                            <a href="@Url.Action("Index", "Home")">
+                                <img src="@Url.Content("~/images/logo.jpeg")" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover;" />
+                            </a>
+
+                            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+                                <li class="active">
+                                    <a href="@Url.Action("Index", "Home")">@LocalizationManager["Home"]</a>
+                                </li>
+                                <li class="has-children">
+                                    <a href="@Url.Content("properties.html")">@LocalizationManager["Properties"]</a>
+                                    <ul class="dropdown">
+                                        <li><a href="#">@LocalizationManager["BuyProperty"]</a></li>
+                                        <li><a href="#">@LocalizationManager["SellProperty"]</a></li>
+                                        <li class="has-children">
+                                            <a href="#">@LocalizationManager["Dropdown"]</a>
+                                            <ul class="dropdown">
+                                                <li><a href="#">@LocalizationManager["SubMenuOne"]</a></li>
+                                                <li><a href="#">@LocalizationManager["SubMenuTwo"]</a></li>
+                                                <li><a href="#">@LocalizationManager["SubMenuThree"]</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="@Url.Content("services.html")">@LocalizationManager["Services"]</a></li>
+                                <li><a href="@Url.Content("about.html")">@LocalizationManager["About"]</a></li>
+
+                                <li>
+                                    <a href="@Url.Action("SwitchLanguage", "Lang", new { cluture = LocalizationManager["OtherLanguageKey"].Value, returnUrl = ViewContext.HttpContext.Request.PathBase + ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString })">
+                                        @LocalizationManager["Language"]
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <a href="#"
+                               class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+                               data-toggle="collapse"
+                               data-target="#main-navbar">
+                                <span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - Dealer - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
+    <script src="@Url.Content("~/lib/bootstrap/dist/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/js/site.js")" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

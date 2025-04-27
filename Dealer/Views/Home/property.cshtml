@@ -1,0 +1,259 @@
+﻿@model List<PropertyImage>
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer LocalizationManager;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Untree.co" />
+    <link rel="shortcut icon" href="favicon.png" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap5" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+    <link href="~/fonts/icomoon/style.css" rel="stylesheet" />
+    <link href="~/fonts/flaticon/font/flaticon.css" rel="stylesheet" />
+    <link href="~/css/aos.css" rel="stylesheet" />
+    <link href="~/css/tiny-slider.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <style>
+        .btn-save-contact {
+            width: 40px;
+            height: 40px;
+            background-color: #00204a; /* Button Color */
+            border: none;
+            border-radius: 50%; /* Makes it circular */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+            .btn-save-contact i {
+                color: white; /* Icon color */
+                font-size: 14px;
+            }
+
+            .btn-save-contact:hover {
+                background-color: #003366; /* Darker shade on hover */
+            }
+
+            .btn-save-contact:active {
+                transform: scale(0.9); /* Slight press effect */
+            }
+    </style>
+</head>
+<body>
+    <div class="site-mobile-menu site-navbar-target">
+        <div class="site-mobile-menu-header">
+            <div class="site-mobile-menu-close">
+                <span class="icofont-close js-menu-toggle"></span>
+            </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+
+    <div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h3>@LocalizationManager["SeeTheProperty"]</h3>
+    </div>
+
+    
+    <div class="section">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-7">
+                    <div class="img-property-slide-wrap">
+                        <div class="img-property-slide">
+                            @foreach (var img in Model)
+                            {
+                                var base64Image = $"data:image/jpeg;base64,{Convert.ToBase64String(img.ImageData)}";
+                                <img src="@base64Image" alt="Image" class="img-fluid" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h2 class="heading text-primary">Find Your Perfect property Today</h2>
+                    <p class="meta">Exclusive Listings Across Prime Locations</p>
+                    <p class="text-black-50">
+                        Discover your dream home with our premium selection of properties and luxury villas. We provide the best real estate options tailored to your needs.
+                    </p>
+                    <p class="text-black-50">
+                        Whether you're looking for a family villa or a new investment opportunity, our team is ready to help you buy the perfect property with ease and confidence.
+                    </p>
+
+                    <div class="d-block agent-box p-5">
+                        <div class="img mb-4">
+                            <img src="~/images/osama.jpeg"
+                                 alt="Image"
+                                 class="img-fluid" />
+                        </div>
+                        <div class="text">
+                            <h3 class="mb-0">Our real estate representative</h3>
+                            <p>
+                                Interested in buying a villa or property? Contact us today and let us guide you through every step of the purchase.
+                            </p>
+                            <ul class="list-unstyled social dark-hover d-flex">
+                                <li class="me-1">
+                                    <a href=""><span class="icon-instagram"></span></a>
+                                </li>
+                                <li class="me-1">
+                                    <a href=""><span class="icon-facebook"></span></a>
+                                </li>
+                                <li class="me-1">
+                                    <a href="https://wa.me/+962791131457" target="_blank">
+                                        <span class="icon-whatsapp"></span>
+                                    </a>
+                                </li>
+                                <li class="me-1">
+                                    <a href="tel:+962797683245">
+                                        <span class="icon-phone"></span>
+                                    </a>
+                                </li>
+                                <li class="me-1">
+                                    <button onclick="saveContact()" class="btn-save-contact">
+                                        <i class="fa fa-user-plus"></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="widget">
+                        <h3>Contact</h3>
+                        <address>Amman- Jo</address>
+                        <ul class="list-unstyled links">
+                            <li><a href="tel://962791131457">+962791131457</a></li>
+                            <li><a href="tel://962797683245">+962797683245</a></li>
+                            <li>
+                                <a href="mailto:info@mydomain.com">info@mydomain.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.widget -->
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                  
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="widget">
+                        <h3>Links</h3>
+                        <ul class="list-unstyled links">
+                            <li><a href="#">Our Vision</a></li>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+
+                        <ul class="list-unstyled social">
+                            <li>
+                                <a href="#"><span class="icon-instagram"></span></a>
+                           
+                            </li>
+                            <li>
+                                <a href="#"><span class="icon-facebook"></span></a>
+                            </li>
+                         
+                        </ul>
+                    </div>
+                    <!-- /.widget -->
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <!--
+                      **==========
+                      NOTE:
+                      Please don't remove this copyright link unless you buy the license here https://untree.co/license/
+                      **==========
+                    -->
+
+                    <p>
+                        Copyright &copy;
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        . All Rights Reserved. &mdash; Designed with love by
+                        <a href="https://untree.co">Untree.co</a>
+                        <!-- License information: https://untree.co/license/ -->
+                    </p>
+                    <div>
+                        Distributed by
+                        <a href="https://themewagon.com/" target="_blank">themewagon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.site-footer -->
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <script src="@Url.Content("~/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/js/tiny-slider.js")"></script>
+    <script src="@Url.Content("~/js/aos.js")"></script>
+    <script src="@Url.Content("~/js/navbar.js")"></script>
+    <script src="@Url.Content("~/js/counter.js")"></script>
+    <script src="@Url.Content("~/js/custom.js")"></script>
+    <script>
+        function saveContact() {
+            const vCardData = `BEGIN:VCARD
+        VERSION:3.0
+        FN:Osama Owaidat
+        ORG:Real Estate Broker
+        TEL:+962797683245
+        EMAIL:osama@example.com
+        END:VCARD`;
+
+            const blob = new Blob([vCardData], { type: "text/vcard" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "Osama_Owaidat.vcf";
+            link.click();
+
+            // Open Contact on Android
+            setTimeout(() => {
+                window.location.href = "content://com.android.contacts/contacts/";
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

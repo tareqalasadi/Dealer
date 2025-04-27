@@ -1,0 +1,357 @@
+﻿@model List<PropertyViewModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Listings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .property-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+            .property-item:hover {
+                transform: translateY(-5px);
+            }
+
+            .property-item img {
+                width: 100%;
+                border-radius: 8px;
+            }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 1.2rem;
+        }
+
+        .filter-btn, .reset-btn {
+            padding: 8px 20px;
+            border-radius: 5px;
+            color: white;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .filter-btn {
+            background: #005555;
+        }
+
+            .filter-btn:hover {
+                background: #004040;
+            }
+
+        .reset-btn {
+            background: #6c757d;
+        }
+
+            .reset-btn:hover {
+                background: #5a6268;
+            }
+
+        .price-range-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .price-input {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="filter-section" style="margin-top: 145px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="filter-title"><i class="fas fa-filter me-2"></i> Filter Properties</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-map-marker-alt me-2"></i>Location</label>
+                        <select class="form-select" id="locationFilter">
+                            <option value="">All</option>
+                            <option value="Amman">Amman</option>
+                            <option value="Irbid">Irbid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-location-dot me-2"></i>Area</label>
+                        <select class="form-select" id="areaFilter">
+                            <option value="">All Areas</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-tag me-2"></i>Price Range (JD)</label>
+                        <div class="price-range-group">
+                            <input type="number" class="form-control price-input" id="minPrice" placeholder="Min">
+                            <span class="align-self-center">to</span>
+                            <input type="number" class="form-control price-input" id="maxPrice" placeholder="Max">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-expand-arrows-alt me-2"></i>Min Space (m²)</label>
+                        <input type="number" class="form-control" id="minSpace" min="0">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-bed me-2"></i>Beds</label>
+                        <select class="form-select" id="bedsFilter">
+                            <option value="0">Any</option>
+                            <option value="1">1+</option>
+                            <option value="2">2+</option>
+                            <option value="3">3+</option>
+                            <option value="4">4+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-bath me-2"></i>Baths</label>
+                        <select class="form-select" id="bathsFilter">
+                            <option value="0">Any</option>
+                            <option value="1">1+</option>
+                            <option value="2">2+</option>
+                            <option value="3">3+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 d-flex justify-content-end">
+                    <button class="reset-btn me-2" id="resetFilters"><i class="fas fa-undo me-1"></i> Reset</button>
+                    <button class="filter-btn" id="applyFilters"><i class="fas fa-search me-1"></i> Apply</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mb-4">Apartments for Sale</h2>
+        <div class="row" id="propertyContainer">
+            @foreach (var property in Model)
+            {
+                var imageSrc = property.Image != null
+                ? $"data:image/jpeg;base64,{Convert.ToBase64String(property.Image)}"
+                : Url.Content("~/images/placeholder.jpg");
+
+                <div class="col-md-4 property-card"
+                     data-price="@property.Price"
+                     data-space="@property.Space"
+                     data-beds="@property.CountBeds"
+                     data-baths="@property.CountBaths"
+                     data-location="@property.Location.ToLower()"
+                     data-area="@(property.Area != null ? property.Area.ToLower() : "")">
+                    <div class="property-item">
+                        <img src="@imageSrc" alt="Property Image" class="img-fluid" />
+                        <div class="property-content mt-3">
+                            <div class="price mb-2"><i class="fas fa-tag me-2"></i>@property.Price JD</div>
+                            <div><i class="fas fa-map-marker-alt me-2"></i>@property.Location - @property.Area</div>
+                            <div class="city mb-2">@property.DescEn</div>
+                            <div class="specs d-flex mb-3">
+                                <span class="me-3"><i class="fas fa-bed me-2"></i>@property.CountBeds Beds</span>
+                                <span class="me-3"><i class="fas fa-bath me-2"></i>@property.CountBaths Baths</span>
+                                <span><i class="fas fa-expand-arrows-alt me-2"></i>@property.Space m²</span>
+                            </div>
+                            <a href="@Url.Action("property", "Home", new { PropertyId = property.EncryptedId })" class="btn btn-primary px-3">See Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div id="noResults" class="no-results" style="display: none;">
+            <i class="fas fa-search fa-3x mb-3"></i>
+            <h4>No properties match your filters</h4>
+            <p>Try adjusting your search criteria</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+                const areasByLocation = {
+                  amman: [
+          "Abdoun",
+          "Abu Nseir",
+          "Al-Abdali",
+          "Al-Jubeiha",
+          "Al-Madinah Al-Riyadiyah",
+          "Al-Madinah Al-Tijariyah",
+          "Al-Madinah Al-Sinaiyah",
+          "Al-Muqabalain",
+          "Al-Nasr",
+          "Al-Qweismeh",
+          "Al-Rabieh",
+          "Al-Yarmouk",
+          "Al-Yasmeen",
+          "Al-Zahra",
+          "Bader",
+          "Baq'a",
+          "Dabouq",
+          "Deir Ghbar",
+          "Hashemi Shamali",
+          "Hashemi Janoubi",
+          "Jabal Amman",
+          "Jabal Al-Hussein",
+          "Jabal Al-Luweibdeh",
+          "Jabal Al-Ashrafieh",
+          "Jabal Al-Taj",
+          "Khalda",
+          "Marj Al-Hamam",
+          "Marka",
+          "Medina Street (Downtown)",
+          "Ras Al-Ein",
+          "Shmeisani",
+          "Shafa Badran",
+          "Sports City",
+          "Sweifieh",
+          "Tabarbour",
+          "Tla'a Al-Ali",
+          "Um Uthaina",
+          "Wadi Al-Seer",
+          "Zahran",
+          "Al-Misdar",
+          "Al-Nuzha",
+          "Al-Quds",
+          "Al-Raween",
+          "Al-Sahab",
+          "Al-Swaifiyeh",
+          "Al-Wihdat",
+          "Al-Zaytoonah"
+        ],
+                 irbid: [
+          "Downtown (Al-Balad)",
+          "University District",
+          "alraahibat alwardiah",
+          "dahiat alhusayn",
+          "alhayu aljanubiu",
+          "Al-Qasabeh",
+          "Al-Sareeh",
+          "Nazzal",
+          "Al-Hashmi",
+          "Al-Sharqiya",
+          "Al-Gharbiya",
+          "Al-Yarmouk",
+          "Al-Rawda",
+          "Al-Wahda",
+          "Al-Quds",
+          "Al-Razi",
+          "Al-Salam",
+          "Al-Nasr",
+          "Al-Iskan",
+          "Al-Jame'a",
+          "Al-Mustaqbal",
+          "Al-Rashid",
+          "Al-Saada",
+          "Al-Zahra",
+          "Al-Mughtarebeen",
+          "Al-Husn",
+          "Al-Ramtha"
+        ]
+        };
+
+
+        function populateAreaOptions(location) {
+            const areaDropdown = $('#areaFilter');
+            areaDropdown.empty();
+            areaDropdown.append('<option value="">All Areas</option>');
+
+            if (areasByLocation[location]) {
+                areasByLocation[location].forEach(area => {
+                    areaDropdown.append(`<option value="${area.toLowerCase()}">${area}</option>`);
+                });
+            }
+        }
+
+        function applyFilters() {
+            const location = $('#locationFilter').val().toLowerCase();
+            const area = $('#areaFilter').val().toLowerCase();
+            const minPrice = parseFloat($('#minPrice').val()) || 0;
+            const maxPrice = parseFloat($('#maxPrice').val()) || 9999999;
+            const minSpace = parseFloat($('#minSpace').val()) || 0;
+            const minBeds = parseInt($('#bedsFilter').val()) || 0;
+            const minBaths = parseInt($('#bathsFilter').val()) || 0;
+
+            let visibleCount = 0;
+            $('.property-card').each(function () {
+                const card = $(this);
+                const cardPrice = parseFloat(card.data('price'));
+                const cardSpace = parseFloat(card.data('space'));
+                const cardBeds = parseInt(card.data('beds'));
+                const cardBaths = parseInt(card.data('baths'));
+                const cardLocation = card.data('location');
+                const cardArea = card.data('area');
+
+                const matchesLocation = !location || cardLocation === location;
+                const matchesArea = !area || cardArea === area;
+                const matchesPrice = cardPrice >= minPrice && cardPrice <= maxPrice;
+                const matchesSpace = cardSpace >= minSpace;
+                const matchesBeds = cardBeds >= minBeds;
+                const matchesBaths = cardBaths >= minBaths;
+
+                if (matchesLocation && matchesArea && matchesPrice && matchesSpace && matchesBeds && matchesBaths) {
+                    card.show();
+                    visibleCount++;
+                } else {
+                    card.hide();
+                }
+            });
+
+            $('#noResults').toggle(visibleCount === 0);
+        }
+
+        $(document).ready(function () {
+            $('#locationFilter').change(function () {
+                const selected = $(this).val().toLowerCase();
+                populateAreaOptions(selected);
+            });
+
+            $('#applyFilters').click(applyFilters);
+
+            $('#resetFilters').click(function () {
+                $('#locationFilter, #areaFilter, #minPrice, #maxPrice, #minSpace, #bedsFilter, #bathsFilter').val('');
+                $('.property-card').show();
+                $('#noResults').hide();
+            });
+        });
+    </script>
+</body>
+</html>
