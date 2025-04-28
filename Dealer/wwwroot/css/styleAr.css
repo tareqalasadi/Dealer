@@ -491,8 +491,9 @@ progress {
     content: "\2014\00A0"; }
 
 .img-fluid {
-  max-width: 100%;
-  height: auto; }
+    max-width: 100%;
+    min-height: 303px !important;
+}
 
 .img-thumbnail {
   padding: 0.25rem;
@@ -5963,7 +5964,7 @@ textarea.form-control-lg {
   vertical-align: text-top !important; }
 
 .float-start {
-  float: left !important; }
+  float: right !important; }
 
 .float-end {
   float: right !important; }
@@ -9899,7 +9900,6 @@ textarea {
   font-size: 13px;
   position: relative;
   width: 100%;
-  margin-top: -100px;
   -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   z-index: 2; }
@@ -10326,10 +10326,12 @@ nav[aria-label="breadcrumb"] li:before {
   font-size: 14px; }
 
 .site-footer {
-  background: #efefef;
-  font-size: 14px;
-  color: #888;
-  padding: 70px 0; }
+    background: #efefef;
+    text-align: -webkit-right;
+    font-size: 14px;
+    color: #888;
+    padding: 70px 0;
+}
   .site-footer a {
     color: #777;
     position: relative;

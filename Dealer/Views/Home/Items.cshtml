@@ -1,4 +1,9 @@
 ﻿@model List<PropertyViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer LocalizationManager;
+@{
+    var IsEnlish = System.Globalization.CultureInfo.CurrentCulture.Name.StartsWith("ar") ? false : true;
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -91,55 +96,105 @@
             flex: 1;
         }
     </style>
+
+    <style>
+        .truncate-text {
+    white-space: break-spaces;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.expanded-text {
+    white-space: normal;
+    overflow: visible;
+}
+
+        /* Add this CSS to your stylesheet */
+        .filter-section .form-control,
+        .filter-section .form-select {
+            height: 40px; /* Set a fixed height */
+            min-width: auto; /* Make sure they take full width of their container */
+        }
+
+        .filter-group {
+            height: 100%; /* Make filter groups take full height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-range-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+            .price-range-group .price-input {
+                flex: 1; /* Make price inputs share space equally */
+            }
+
+        .filter-label {
+            margin-bottom: 8px; /* Consistent spacing below labels */
+            white-space: nowrap; /* Prevent label wrapping */
+        }
+
+        /* Adjust the column padding for better spacing */
+        .row > [class^="col-"] {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    </style>
+
 </head>
 <body>
-    <div class="container mt-5">
+
+    <div class="container mt-5 directionrtl">
         <div class="filter-section" style="margin-top: 145px;">
             <div class="row">
                 <div class="col-md-12">
-                    <h5 class="filter-title"><i class="fas fa-filter me-2"></i> Filter Properties</h5>
+                    <h5 class="filter-title"><i class="fas fa-filter me-2"></i> @LocalizationManager["FilterProperties"]</h5>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
                     <div class="filter-group">
-                        <label class="filter-label"><i class="fas fa-map-marker-alt me-2"></i>Location</label>
+                        <label class="filter-label"><i class="fas fa-map-marker-alt me-2"></i>@LocalizationManager["Location"]</label>
                         <select class="form-select" id="locationFilter">
-                            <option value="">All</option>
-                            <option value="Amman">Amman</option>
-                            <option value="Irbid">Irbid</option>
+                            <option value="">@LocalizationManager["All"]</option>
+                            <option value="Amman">@LocalizationManager["Amman"]</option>
+                            <option value="Irbid">@LocalizationManager["Irbid"]</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="filter-group">
-                        <label class="filter-label"><i class="fas fa-location-dot me-2"></i>Area</label>
+                        <label class="filter-label"><i class="fas fa-location-dot me-2"></i>@LocalizationManager["Area"]</label>
                         <select class="form-select" id="areaFilter">
-                            <option value="">All Areas</option>
+                            <option value="">@LocalizationManager["AllAreas"]</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="filter-group">
-                        <label class="filter-label"><i class="fas fa-tag me-2"></i>Price Range (JD)</label>
+                        <label class="filter-label"><i class="fas fa-tag me-2"></i>@LocalizationManager["PriceRange"] (JD)</label>
                         <div class="price-range-group">
-                            <input type="number" class="form-control price-input" id="minPrice" placeholder="Min">
-                            <span class="align-self-center">to</span>
-                            <input type="number" class="form-control price-input" id="maxPrice" placeholder="Max">
+                            <input type="number" class="form-control price-input" id="minPrice" placeholder="@LocalizationManager["Min"]">
+                            <span class="align-self-center">@LocalizationManager["to"]</span>
+                            <input type="number" class="form-control price-input" id="maxPrice" placeholder="@LocalizationManager["Max"]">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="filter-group">
-                        <label class="filter-label"><i class="fas fa-expand-arrows-alt me-2"></i>Min Space (m²)</label>
+                        <label class="filter-label"><i class="fas fa-expand-arrows-alt me-2"></i>@LocalizationManager["MinSpace"] (m²)</label>
                         <input type="number" class="form-control" id="minSpace" min="0">
                     </div>
                 </div>
                 <div class="col-md-1">
                     <div class="filter-group">
-                        <label class="filter-label"><i class="fas fa-bed me-2"></i>Beds</label>
+                        <label class="filter-label"><i class="fas fa-bed me-2"></i>@LocalizationManager["Beds"]</label>
                         <select class="form-select" id="bedsFilter">
-                            <option value="0">Any</option>
+                            <option value="0">@LocalizationManager["Any"]</option>
                             <option value="1">1+</option>
                             <option value="2">2+</option>
                             <option value="3">3+</option>
@@ -149,9 +204,9 @@
                 </div>
                 <div class="col-md-1">
                     <div class="filter-group">
-                        <label class="filter-label"><i class="fas fa-bath me-2"></i>Baths</label>
+                        <label class="filter-label"><i class="fas fa-bath me-2"></i>@LocalizationManager["Baths"]</label>
                         <select class="form-select" id="bathsFilter">
-                            <option value="0">Any</option>
+                            <option value="0">@LocalizationManager["Any"]</option>
                             <option value="1">1+</option>
                             <option value="2">2+</option>
                             <option value="3">3+</option>
@@ -159,20 +214,20 @@
                     </div>
                 </div>
                 <div class="col-md-12 d-flex justify-content-end">
-                    <button class="reset-btn me-2" id="resetFilters"><i class="fas fa-undo me-1"></i> Reset</button>
-                    <button class="filter-btn" id="applyFilters"><i class="fas fa-search me-1"></i> Apply</button>
+                    <button class="reset-btn me-2" id="resetFilters"><i class="fas fa-undo me-1"></i> @LocalizationManager["Reset"]</button>
+                    <button class="filter-btn" id="applyFilters"><i class="fas fa-search me-1"></i> @LocalizationManager["Apply"]</button>
                 </div>
             </div>
         </div>
 
-        <h2 class="mb-4">Apartments for Sale</h2>
+        <h2 class="mb-4">@LocalizationManager["ApartmentsForSale"]</h2>
         <div class="row" id="propertyContainer">
             @foreach (var property in Model)
             {
                 var imageSrc = property.Image != null
                 ? $"data:image/jpeg;base64,{Convert.ToBase64String(property.Image)}"
                 : Url.Content("~/images/placeholder.jpg");
-
+                var categoryName = IsEnlish ? property.DescEn : property.DescAr;
                 <div class="col-md-4 property-card"
                      data-price="@property.Price"
                      data-space="@property.Space"
@@ -183,27 +238,33 @@
                     <div class="property-item">
                         <img src="@imageSrc" alt="Property Image" class="img-fluid" />
                         <div class="property-content mt-3">
-                            <div class="price mb-2"><i class="fas fa-tag me-2"></i>@property.Price JD</div>
+                            <div class="price mb-2"><i class="fas fa-tag me-2"></i>@property.Price @LocalizationManager["JD"]</div>
                             <div><i class="fas fa-map-marker-alt me-2"></i>@property.Location - @property.Area</div>
-                            <div class="city mb-2">@property.DescEn</div>
+                                <div class="city mb-2">
+                             <span class="truncate-text" data-fulltext="@categoryName">@categoryName</span>
+                                 </div>
+                            @* <div class="city mb-2">@categoryName</div> *@
                             <div class="specs d-flex mb-3">
-                                <span class="me-3"><i class="fas fa-bed me-2"></i>@property.CountBeds Beds</span>
-                                <span class="me-3"><i class="fas fa-bath me-2"></i>@property.CountBaths Baths</span>
+                                <span class="me-3"><i class="fas fa-bed me-2"></i>@property.CountBeds @LocalizationManager["Beds"]</span>
+                                <span class="me-3"><i class="fas fa-bath me-2"></i>@property.CountBaths @LocalizationManager["Baths"]</span>
                                 <span><i class="fas fa-expand-arrows-alt me-2"></i>@property.Space m²</span>
                             </div>
-                            <a href="@Url.Action("property", "Home", new { PropertyId = property.EncryptedId })" class="btn btn-primary px-3">See Details</a>
+                            <a href="@Url.Action("property", "Home", new { PropertyId = property.EncryptedId })" class="btn btn-primary px-3">@LocalizationManager["SeeDetails"]</a>
                         </div>
                     </div>
                 </div>
             }
+       
         </div>
 
         <div id="noResults" class="no-results" style="display: none;">
             <i class="fas fa-search fa-3x mb-3"></i>
-            <h4>No properties match your filters</h4>
-            <p>Try adjusting your search criteria</p>
+            <h4>@LocalizationManager["NoPropertiesMatch"]</h4>
+            <p>@LocalizationManager["TryAdjustingSearch"]</p>
         </div>
     </div>
+
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -288,7 +349,30 @@
         ]
         };
 
+        document.addEventListener('DOMContentLoaded', function() {
+            const truncateElements = document.querySelectorAll('.truncate-text');
 
+            truncateElements.forEach(el => {
+                const fullText = el.getAttribute('data-fulltext');
+                const maxLength = 50; // Adjust as needed
+
+                // Truncate on load
+                if (fullText.length > maxLength) {
+                    el.textContent = fullText.substring(0, maxLength) + '...';
+                }
+
+                // Toggle on click
+                el.addEventListener('click', function() {
+                    if (el.textContent.endsWith('...')) {
+                        el.textContent = fullText;
+                        el.classList.add('expanded');
+                    } else {
+                        el.textContent = fullText.substring(0, maxLength) + '...';
+                        el.classList.remove('expanded');
+                    }
+                });
+            });
+        });
         function populateAreaOptions(location) {
             const areaDropdown = $('#areaFilter');
             areaDropdown.empty();

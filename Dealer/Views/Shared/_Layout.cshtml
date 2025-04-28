@@ -8,7 +8,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Dealer</title>
+    <title>Dealer</title>
+    <link href="~/images/logo.jpeg" rel="icon">
+    <link href="~/images/logo.jpeg" rel="apple-touch-icon">
     <link rel="stylesheet" href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -49,7 +51,7 @@
                                 <li class="active">
                                     <a href="@Url.Action("Index", "Home")">@LocalizationManager["Home"]</a>
                                 </li>
-                                <li class="has-children">
+@*                                 <li class="has-children">
                                     <a href="@Url.Content("properties.html")">@LocalizationManager["Properties"]</a>
                                     <ul class="dropdown">
                                         <li><a href="#">@LocalizationManager["BuyProperty"]</a></li>
@@ -66,7 +68,7 @@
                                 </li>
                                 <li><a href="@Url.Content("services.html")">@LocalizationManager["Services"]</a></li>
                                 <li><a href="@Url.Content("about.html")">@LocalizationManager["About"]</a></li>
-
+ *@
                                 <li>
                                     <a href="@Url.Action("SwitchLanguage", "Lang", new { cluture = LocalizationManager["OtherLanguageKey"].Value, returnUrl = ViewContext.HttpContext.Request.PathBase + ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString })">
                                         @LocalizationManager["Language"]

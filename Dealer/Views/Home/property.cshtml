@@ -76,7 +76,7 @@
         <h3>@LocalizationManager["SeeTheProperty"]</h3>
     </div>
 
-    
+
     <div class="section">
         <div class="container">
             <div class="row justify-content-between">
@@ -86,19 +86,19 @@
                             @foreach (var img in Model)
                             {
                                 var base64Image = $"data:image/jpeg;base64,{Convert.ToBase64String(img.ImageData)}";
-                                <img src="@base64Image" alt="Image" class="img-fluid" />
+                                <img style="max-height: 661px;" src="@base64Image" alt="Image" class="img-fluid" />
                             }
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <h2 class="heading text-primary">Find Your Perfect property Today</h2>
-                    <p class="meta">Exclusive Listings Across Prime Locations</p>
+                <div class="col-lg-4 directionrtl">
+                    <h2 class="heading text-primary">@LocalizationManager["FindPerfectProperty"]</h2>
+                    <p class="meta">@LocalizationManager["ExclusiveListings"]</p>
                     <p class="text-black-50">
-                        Discover your dream home with our premium selection of properties and luxury villas. We provide the best real estate options tailored to your needs.
+                        @LocalizationManager["DreamHomeDescription"]
                     </p>
                     <p class="text-black-50">
-                        Whether you're looking for a family villa or a new investment opportunity, our team is ready to help you buy the perfect property with ease and confidence.
+                        @LocalizationManager["PropertyInvestmentDescription"]
                     </p>
 
                     <div class="d-block agent-box p-5">
@@ -108,9 +108,9 @@
                                  class="img-fluid" />
                         </div>
                         <div class="text">
-                            <h3 class="mb-0">Our real estate representative</h3>
+                            <h3 class="mb-0">@LocalizationManager["OurRepresentative"]</h3>
                             <p>
-                                Interested in buying a villa or property? Contact us today and let us guide you through every step of the purchase.
+                                @LocalizationManager["ContactForPurchase"]
                             </p>
                             <ul class="list-unstyled social dark-hover d-flex">
                                 <li class="me-1">
@@ -138,92 +138,69 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <div class="site-footer">
+    <div class="site-footer directionrtl">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="widget">
-                        <h3>Contact</h3>
-                        <address>Amman- Jo</address>
+                        <h3>@LocalizationManager["Contact"]</h3>
+                        <address>@LocalizationManager["AmmanJordan"]</address>
                         <ul class="list-unstyled links">
-                            <li><a href="tel://962791131457">+962791131457</a></li>
-                            <li><a href="tel://962797683245">+962797683245</a></li>
-                            <li>
-                                <a href="mailto:info@mydomain.com">info@mydomain.com</a>
-                            </li>
+                            <li><a href="tel://@LocalizationManager["TariqMobile"]">@LocalizationManager["TariqMobile"] </a></li>
+                            <li><a href="tel://@LocalizationManager["GhaithMobile"]">@LocalizationManager["GhaithMobile"] </a></li>
+                            <li><a href="@LocalizationManager["DealerEmail"]">@LocalizationManager["DealerEmail"] </a></li>
                         </ul>
                     </div>
-                    <!-- /.widget -->
                 </div>
-                <!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                  
-                </div>
-                <!-- /.col-lg-4 -->
+                <div class="col-lg-4"></div>
                 <div class="col-lg-4">
                     <div class="widget">
-                        <h3>Links</h3>
+                        <h3>@LocalizationManager["Links"]</h3>
                         <ul class="list-unstyled links">
-                            <li><a href="#">Our Vision</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Contact us</a></li>
+                            <li><a href="#">@LocalizationManager["OurVision"]</a></li>
+                            <li><a href="#">@LocalizationManager["AboutUs"]</a></li>
+                            <li><a href="#">@LocalizationManager["ContactUs"]</a></li>
                         </ul>
-
                         <ul class="list-unstyled social">
                             <li>
                                 <a href="#"><span class="icon-instagram"></span></a>
-                           
                             </li>
                             <li>
                                 <a href="#"><span class="icon-facebook"></span></a>
                             </li>
-                         
                         </ul>
                     </div>
-                    <!-- /.widget -->
                 </div>
-                <!-- /.col-lg-4 -->
             </div>
-            <!-- /.row -->
 
             <div class="row mt-5">
                 <div class="col-12 text-center">
-                    <!--
-                      **==========
-                      NOTE:
-                      Please don't remove this copyright link unless you buy the license here https://untree.co/license/
-                      **==========
-                    -->
-
                     <p>
-                        Copyright &copy;
+                        @LocalizationManager["Copyright"] &copy;
                         <script>
                             document.write(new Date().getFullYear());
                         </script>
-                        . All Rights Reserved. &mdash; Designed with love by
-                        <a href="https://untree.co">Untree.co</a>
-                        <!-- License information: https://untree.co/license/ -->
+                        @LocalizationManager["AllRightsReserved"] &mdash; @LocalizationManager["DesignedBy"]
+                        <a target="_blank" href="@LocalizationManager["GTInstagramLink"]">GT Technology</a>
                     </p>
                     <div>
-                        Distributed by
-                        <a href="https://themewagon.com/" target="_blank">themewagon</a>
+                        @LocalizationManager["DistributedBy"]
+                        <a target="_blank" href="@LocalizationManager["GTInstagramLink"]">GT Technology</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /.container -->
     </div>
-    <!-- /.site-footer -->
+
     <!-- Preloader -->
     <div id="overlayer"></div>
     <div class="loader">
         <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">@LocalizationManager["Loading"]</span>
         </div>
     </div>
 
