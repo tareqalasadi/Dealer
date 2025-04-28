@@ -20,6 +20,11 @@ builder.Services.AddMvc()
         options.DataAnnotationLocalizerProvider = (type, factory) =>
             factory.Create(typeof(JsonStringLoclizerFactory))
     );
+
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.HttpsPort = 443;
+});
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
