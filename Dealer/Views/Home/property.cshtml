@@ -116,7 +116,7 @@
                                     <a href="https://www.instagram.com/dealers.properties?igsh=aDV1ZmphemJ6eXk2"><span class="icon-instagram"></span></a>
                                 </li>
                                 <li class="me-1">
-                                    <a href=""><span class="icon-facebook"></span></a>
+                                    <a href="https://www.facebook.com/profile.php?id=61574541128662"><span class="icon-facebook"></span></a>
                                 </li>
                                 <li class="me-1">
                                     <a href="https://wa.me/+962797689254" target="_blank">
@@ -170,7 +170,7 @@
                                 <a href="https://www.instagram.com/dealers.properties?igsh=aDV1ZmphemJ6eXk2"><span class="icon-instagram"></span></a>
                             </li>
                             <li>
-                                <a href="#"><span class="icon-facebook"></span></a>
+                                <a href="https://www.facebook.com/profile.php?id=61574541128662"><span class="icon-facebook"></span></a>
                             </li>
                         </ul>
                     </div>
@@ -187,10 +187,6 @@
                         @LocalizationManager["AllRightsReserved"] &mdash; @LocalizationManager["DesignedBy"]
                         <a target="_blank" href="@LocalizationManager["GTInstagramLink"]">GT Technology</a>
                     </p>
-                    <div>
-                        @LocalizationManager["DistributedBy"]
-                        <a target="_blank" href="@LocalizationManager["GTInstagramLink"]">GT Technology</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -211,26 +207,51 @@
     <script src="@Url.Content("~/js/counter.js")"></script>
     <script src="@Url.Content("~/js/custom.js")"></script>
     <script>
-        function saveContact() {
-            const vCardData = `BEGIN:VCARD
-        VERSION:3.0
-        FN:Osama Owaidat
-        ORG:Real Estate Broker
-        TEL:+962797683245
-        EMAIL:osama@example.com
-        END:VCARD`;
+       function saveContact() {
+    var name = "Dealer Real Estate";
+    var phone = "+962797689254";
+    var company = "Dealer Group";
+    var email = "dealerscomp7@gmail.com";
+    var url = "https://tg-solutions.online/Dealer";
+    var photoUrl = "https://tg-solutions.online/Dealer/images/logo.jpeg"; // your logo path
 
-            const blob = new Blob([vCardData], { type: "text/vcard" });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "Osama_Owaidat.vcf";
-            link.click();
+    fetch(photoUrl)
+        .then(response => response.blob())
+        .then(blob => {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var base64Data = reader.result.split(',')[1];
 
-            // Open Contact on Android
-            setTimeout(() => {
-                window.location.href = "content://com.android.contacts/contacts/";
-            }, 1000);
-        }
+                var vcard = [
+                    "BEGIN:VCARD",
+                    "VERSION:3.0",
+                    "N:;" + name + ";;;",
+                    "FN:" + name,
+                    "ORG:" + company,
+                    "TEL;TYPE=CELL,VOICE:" + phone,
+                    "EMAIL;TYPE=INTERNET,PREF:" + email,
+                    "URL:" + url,
+                    "PHOTO;ENCODING=b;TYPE=JPEG:" + base64Data,
+                    "END:VCARD"
+                ].join("\r\n");
+
+                var vcardData = encodeURIComponent(vcard);
+                var dataUrl = 'data:text/vcard;charset=utf-8,' + vcardData;
+
+                var a = document.createElement('a');
+                a.href = dataUrl;
+                a.download = 'contact.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            };
+            reader.readAsDataURL(blob);
+        })
+        .catch(error => {
+            console.error('Error loading photo:', error);
+            alert('Failed to load the logo.');
+        });
+}
     </script>
 </body>
 </html>

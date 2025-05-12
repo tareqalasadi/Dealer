@@ -16,15 +16,12 @@
     <meta name="description" content="" />
     <meta name="keywords" content="bootstrap, bootstrap5" />
 
-
-
 </head>
 <body>
 
 
     <div class="hero">
         <div class="hero-slide">
-
             <div class="img overlay"
                  style="background-image: url('@Url.Content("~/images/hero_bg_3.jpg")')"></div>
             <div class="img overlay"
@@ -32,7 +29,6 @@
             <div class="img overlay"
                  style="background-image: url('@Url.Content("~/images/hero_bg_1.jpg")')"></div>
         </div>
-
         <div class="container">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-9 text-center">
@@ -45,6 +41,30 @@
         </div>
     </div>
 
+
+    <div id="AddYOuRealEsate" class="section section-4 bg-light directionrtl">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-7">
+                    <h2 class="font-weight-bold heading text-primary mb-4">
+                        @LocalizationManager["DoYouHaveArealestate"]
+                    </h2>
+                    <p class="text-black-50 fontsize">
+                        @LocalizationManager["AllYouNeed"]
+                    </p>
+                </div>
+                <div class="col-lg-7 mx-auto text-center">
+                    <p>
+                        <a href="@Url.Action("Addproperty", "Home")" target="_blank" class="btn btn-primary text-white py-3 px-4">
+                            @LocalizationManager["UploadYourRealEstate"]
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div id="Services-section" class="section">
         <div class="container">
             <div class="row mb-5 align-items-center">
@@ -53,30 +73,17 @@
                         @LocalizationManager["PopularProperties"]
                     </h2>
                 </div>
-               @*  <div class="col-lg-6 text-lg-end">
-                    <p>
-                        <a href="#"
-                           target="_blank"
-                           class="btn btn-primary text-white py-3 px-4">
-                            @LocalizationManager["Viewallproperties"]
-
-                        </a>
-                    </p>
-                </div> *@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div  class="property-slider-wrap">
+                    <div class="property-slider-wrap">
                         <div class="property-slider">
                             @foreach (var category in Model)
                             {
-                                var base64Image = category.Image != null
-                                ? $"data:image/jpeg;base64,{Convert.ToBase64String(category.Image)}"
-                                : Url.Content("~/images/placeholder.jpg");
                                 var categoryName = IsEnlish ? category.NameEn : category.NameAr;
                                 <div class="property-item">
                                     <a href="property-single.html" class="img">
-                                        <img src="@base64Image" alt="Image" class="img-fluid" />
+                                        <img src="@Url.Content(category.ImagePath)" alt="Image" class="img-fluid" />
                                     </a>
                                     <div class="property-content text-center">
                                         <h5 class="category-title">@categoryName</h5>
@@ -240,7 +247,7 @@
         <div class="row justify-content-center footer-cta" data-aos="fade-up">
             <div class="col-lg-7 mx-auto text-center">
                 <h2 class="mb-4">@LocalizationManager["JoinRealEstateAgents"]</h2>
-               @*  <p>
+                @*  <p>
                     <a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">
                         @LocalizationManager["ApplyRealEstateAgent"]
                     </a>
@@ -281,11 +288,17 @@
 
                         <ul class="list-unstyled social">
                             <li><a href="https://www.instagram.com/dealers.properties?igsh=aDV1ZmphemJ6eXk2"><span class="icon-instagram"></span></a></li>
-                            <li><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li><a href="#"><span class="icon-linkedin"></span></a></li>
-                            <li><a href="#"><span class="icon-pinterest"></span></a></li>
-                            <li><a href="#"><span class="icon-dribbble"></span></a></li>
+                            <li><a href="https://www.facebook.com/profile.php?id=61574541128662"><span class="icon-facebook"></span></a></li>
+                            <li class="me-1">
+                                <a href="https://wa.me/+962797689254" target="_blank">
+                                    <span class="icon-whatsapp"></span>
+                                </a>
+                            </li>
+                            <li class="me-1">
+                                <a href="tel:+962797689254">
+                                    <span class="icon-phone"></span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

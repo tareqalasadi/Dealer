@@ -1,0 +1,474 @@
+﻿@model PropertyRequest
+@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer LocalizationManager;
+@{
+    var IsEnlish = System.Globalization.CultureInfo.CurrentCulture.Name.StartsWith("ar") ? false : true;
+}
+<section id="realEstateFormSection" class="py-5 bg-light directionrtl" style="margin-top: 40px;">
+    <div class="container" id="feedbackModal">
+        <h2 class="text-center text-primary mb-5">@LocalizationManager["PropertyFormTitle"]</h2>
+        <form id="propertyForm" enctype="multipart/form-data">
+            <!-- Property Type Dropdown -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="propertyType" class="form-label fw-semibold">@LocalizationManager["PropertyType"]</label>
+                        <select class="form-select" id="propertyType" name="PropertyType" onchange="showPropertyFields()">
+                            <option value="">@LocalizationManager["SelectPropertyType"]</option>
+                            <option value="lands">@LocalizationManager["Land"]</option>
+                            <option value="Apartments">@LocalizationManager["House"]</option>
+                            <option value="Villas">@LocalizationManager["Villa"]</option>
+                        </select>
+                        <span asp-validation-for="PropertyType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Fields -->
+            <div id="commonFields" class="card shadow-sm mb-4 d-none">
+                <div class="card-header bg-secondary text-white">@LocalizationManager["ClientDetails"]</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="OwnerName" class="form-label">@LocalizationManager["OwnerName"]</label>
+                        <input type="text" id="OwnerName" name="OwnerName" class="form-control" placeholder="@LocalizationManager["EnterOwnerName"]" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="PhoneNumber" class="form-label">@LocalizationManager["PhoneNumber"]</label>
+                        <input type="tel" id="PhoneNumber" name="PhoneNumber" class="form-control directionrtl" placeholder="@LocalizationManager["EnterPhoneNumber"]" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Sections -->
+            @foreach (var type in new[] { "lands", "Apartments", "Villas" })
+            {
+                var sectionId = type + "Fields";
+                <div id="@sectionId" class="card shadow-sm mb-4 property-fields d-none">
+                    <div class="card-header bg-secondary text-white">@LocalizationManager[type + "Details"]</div>
+                    <div class="card-body">
+                        @if (type == "lands")
+                        {
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="Area">@LocalizationManager["Area"]</label>
+                                    <select id="Area" name="Area" class="form-select">
+                                        <option value="Amman">@LocalizationManager["Amman"]</option>
+                                        <option value="Irbid">@LocalizationManager["Irbid"]</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="Location">@LocalizationManager["Location"]</label>
+                                    <input type="text" id="Location" name="Location" class="form-control" placeholder="@LocalizationManager["EnterLocation"]" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="Space">@LocalizationManager["Space"]</label>
+                                    <input type="number" id="Space" name="Space" class="form-control" placeholder="@LocalizationManager["EnterSpace"]" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="LandType">@LocalizationManager["LandType"]</label>
+                                    <select id="LandType" name="LandType" class="form-select">
+                                        <option>@LocalizationManager["Residential"]</option>
+                                        <option>@LocalizationManager["Agricultural"]</option>
+                                        <option>@LocalizationManager["Commercial"]</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="Price">@LocalizationManager["Price"]</label>
+                                    <input type="number" id="Price" name="Price" class="form-control" placeholder="@LocalizationManager["EnterPrice"]" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="Location">@LocalizationManager["Location"]</label>
+                                    <input type="text" id="Location" name="Location" class="form-control" placeholder="@LocalizationManager["EnterLocation"]" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="DescEn">@LocalizationManager["DescreptionEn"]</label>
+                                    <input type="text" id="DescEn" name="DescEn" class="form-control" placeholder="@LocalizationManager["DescreptionEn"]" />
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="DescAr">@LocalizationManager["DescreptionAr"]</label>
+                                    <input type="text" id="DescAr" name="DescAr" class="form-control" placeholder="@LocalizationManager["DescreptionAr"]" />
+                                </div>
+                            </div>
+                        }
+                        else if (type == "Apartments")
+                        {
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="Area">@LocalizationManager["Area"]</label>
+                                    <select id="Area" name="Area" class="form-select">
+                                        <option value="Amman">@LocalizationManager["Amman"]</option>
+                                        <option value="Irbid">@LocalizationManager["Irbid"]</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="Location">@LocalizationManager["Location"]</label>
+                                    <input type="text" id="Location" name="Location" class="form-control" placeholder="@LocalizationManager["EnterLocation"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="Space">@LocalizationManager["Space"]</label>
+                                    <input type="number" id="Space" name="Space" class="form-control" placeholder="@LocalizationManager["EnterSpace"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="NumberOfRooms">@LocalizationManager["NumberOfRooms"]</label>
+                                    <input type="number" id="NumberOfRooms" name="NumberOfRooms" class="form-control" placeholder="@LocalizationManager["EnterRooms"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="NumberOfBathrooms">@LocalizationManager["NumberOfBathrooms"]</label>
+                                    <input type="number" id="NumberOfBathrooms" name="NumberOfBathrooms" class="form-control" placeholder="@LocalizationManager["EnterBathrooms"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="FloorNumber">@LocalizationManager["FloorNumber"]</label>
+                                    <input type="number" id="FloorNumber" name="FloorNumber" class="form-control" placeholder="@LocalizationManager["EnterFloorNumber"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="Price">@LocalizationManager["Price"]</label>
+                                    <input type="number" id="Price" name="Price" class="form-control" placeholder="@LocalizationManager["EnterPrice"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="DescEn">@LocalizationManager["DescreptionEn"]</label>
+                                    <input type="text" id="DescEn" name="DescEn" class="form-control" placeholder="@LocalizationManager["DescreptionEn"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="DescAr">@LocalizationManager["DescreptionAr"]</label>
+                                    <input type="text" id="DescAr" name="DescAr" class="form-control" placeholder="@LocalizationManager["DescreptionAr"]" />
+                                </div>
+                            </div>
+                        }
+                        else if (type == "Villas")
+                        {
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="Area">@LocalizationManager["Area"]</label>
+                                    <select id="Area" name="Area" class="form-select">
+                                        <option value="Amman">@LocalizationManager["Amman"]</option>
+                                        <option value="Irbid">@LocalizationManager["Irbid"]</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="Location">@LocalizationManager["Location"]</label>
+                                    <input type="text" id="Location" name="Location" class="form-control" placeholder="@LocalizationManager["EnterLocation"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="Space">@LocalizationManager["Space"]</label>
+                                    <input type="number" id="Space" name="Space" class="form-control" placeholder="@LocalizationManager["EnterSpace"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="NumberOfRooms">@LocalizationManager["NumberOfRooms"]</label>
+                                    <input type="number" id="NumberOfRooms" name="NumberOfRooms" class="form-control" placeholder="@LocalizationManager["EnterRooms"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="NumberOfBathrooms">@LocalizationManager["NumberOfBathrooms"]</label>
+                                    <input type="number" id="NumberOfBathrooms" name="NumberOfBathrooms" class="form-control" placeholder="@LocalizationManager["EnterBathrooms"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="NumberOfFloors">@LocalizationManager["NumberOfFloors"]</label>
+                                    <input type="number" id="NumberOfFloors" name="NumberOfFloors" class="form-control" placeholder="@LocalizationManager["EnterFloors"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="Price">@LocalizationManager["Price"]</label>
+                                    <input type="number" id="Price" name="Price" class="form-control" placeholder="@LocalizationManager["EnterPrice"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="DescEn">@LocalizationManager["DescreptionEn"]</label>
+                                    <input type="text" id="DescEn" name="DescEn" class="form-control" placeholder="@LocalizationManager["DescreptionEn"]" />
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="DescAr">@LocalizationManager["DescreptionAr"]</label>
+                                    <input type="text" id="DescAr" name="DescAr" class="form-control" placeholder="@LocalizationManager["DescreptionAr"]" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <!-- Media Upload -->
+            <div id="mediaUploadSection" class="card shadow-sm mb-4 d-none">
+                <div class="card-header bg-secondary text-white">@LocalizationManager["MediaUpload"]</div>
+                <div class="card-body">
+                    <div class="form-check mt-3 checkboxstyle">
+                        <input class="form-check-input" type="checkbox" id="TakePicture" name="TakePicture" value="true" />
+                        <label class="form-check-label" for="TakePicture">
+                            @LocalizationManager["TakePictureOfProperty"]
+                        </label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ImageUpload">@LocalizationManager["UploadImages"]</label>
+                        <input type="file" id="ImageUpload" name="ImageUpload" class="form-control" accept="image/*" multiple />
+                    </div>
+                    <div class="mb-3">
+                        <label for="VideoUpload">@LocalizationManager["UploadVideos"]</label>
+                        <input type="file" id="VideoUpload" name="VideoUpload" class="form-control" accept="video/*" multiple />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg px-5">@LocalizationManager["SubmitProperty"]</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+
+    <div id="popupMessage" class="popup-modal">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span id="closePopup" class="close-btn">&times;</span>
+                <h3 id="popupTitle"></h3>
+            </div>
+            <p id="popupText"></p>
+            <button class="popup-btn" id="closePopupButton">Close</button>
+        </div>
+    </div>
+    <div class="overlay"></div>
+
+</section>
+@section Scripts {
+    <script>
+
+              $(document).ready(function () {
+                          document.getElementById("propertyForm").addEventListener("input", function(event) {
+
+             const inputId = event.target.id; // Get the ID of the changed input field
+             removeError(inputId); // Call the removeError function
+         });
+
+                 document.getElementById("TakePicture").addEventListener("change", function() {
+             const imageUpload = document.getElementById("ImageUpload");
+             if (this.checked) {
+                                  document.getElementById("ImageUpload").required = false;
+                  document.getElementById("VideoUpload").required = false;
+                   removeError("ImageUpload")
+                    removeError("VideoUpload")
+
+             } else {
+                                  document.getElementById("ImageUpload").required = true;
+                  document.getElementById("VideoUpload").required = true;
+             }
+         });
+
+                      });
+
+
+        function showError(inputId, message) {
+                 const input = document.getElementById(inputId);
+                 if (input) {
+                     const error = document.createElement('div');
+                     error.className = 'text-danger js-validation';
+                     error.innerText = message;
+                     input.parentNode.appendChild(error);
+                     isValid = false;
+                 }
+             }
+
+
+
+         function removeError(inputId) {
+             const input = document.getElementById(inputId);
+             if (input) {
+                 const existingError = input.parentNode.querySelector('.js-validation');
+                 if (existingError) {
+                     existingError.remove();
+                 }
+             }
+         }
+
+                 document.getElementById("propertyForm").addEventListener("submit", function (e) {
+             const selectedType = document.getElementById("propertyType").value;
+
+             // Hide all property field sections first
+             document.querySelectorAll(".property-fields").forEach(section => {
+                 if (!section.id.startsWith(selectedType)) {
+                     section.remove(); // Remove unused sections
+                 }
+             });
+         });
+                 document.getElementById("propertyForm").addEventListener("submit", function (e) {
+            // Show loading spinner before AJAX call
+            $('#loadingSpinner').show();
+                $('.overlay').show();
+            e.preventDefault(); // Prevent form from submitting the usual way
+
+            const selectedType = document.getElementById("propertyType").value;
+            const takePictureChecked = document.getElementById("TakePicture").checked;
+
+            // Reset all required field validations before applying new ones
+            const fields = document.querySelectorAll("input, select");
+            fields.forEach(field => field.required = false);
+
+            // Set specific validations based on selected property type
+            document.getElementById("PhoneNumber").required = true;
+            document.getElementById("OwnerName").required = true;
+            document.getElementById("DescEn").required = true;
+            document.getElementById("DescAr").required = true;
+
+            if (selectedType === 'Villas') {
+                setVillaValidation();
+            } else if (selectedType === 'Apartments') {
+                setApartmentValidation();
+            } else if (selectedType === 'lands') {
+                setLandValidation();
+            }
+
+            // Image and video validation based on TakePicture checkbox
+            if (!takePictureChecked) {
+                document.getElementById("ImageUpload").required = true;
+                document.getElementById("VideoUpload").required = true;
+            }
+
+            // Validate the form
+            const isValid = validateForm();
+            if (isValid) {
+                var formData = new FormData(document.getElementById('propertyForm'));
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Addproperty", "Home")', // Replace with your controller action
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        // Hide the loading spinner after success
+                        debugger
+                        $('#loadingSpinner').hide();
+                            $('.overlay').hide();
+                                            document.getElementById("propertyForm").reset();
+
+                        showPopupMessage('Success: Property added successfully!', 'success');
+                    },
+                    error: function () {
+                        // Hide the loading spinner after error
+                        $('#loadingSpinner').hide();
+                            $('.overlay').hide();
+                        showPopupMessage('Error: There was an issue adding the property. Please try again.', 'error');
+                    }
+                });
+            } else {
+                    $('.overlay').hide();
+                // Hide the loading spinner if the form is not valid (optional)
+                $('#loadingSpinner').hide();
+            }
+        });
+
+
+                       function showPopupMessage(message, type) {
+            var popupText = $('#popupText');
+            var popupMessage = $('#popupMessage');
+            var popupTitle = $('#popupTitle');
+            var popupButton = $('#closePopupButton');
+
+            // Set the popup message text
+            popupText.text(message);
+
+            // Set the title based on the type
+            if (type === 'success') {
+                popupTitle.text('Success!');
+                popupButton.css('background-color', '#4CAF50'); // Green button for success
+                popupMessage.addClass('success');
+            } else {
+                popupTitle.text('Error!');
+                popupButton.css('background-color', '#f44336'); // Red button for error
+                popupMessage.addClass('error');
+            }
+
+            // Show the popup with animation
+            popupMessage.fadeIn();
+
+            // Close popup on click of close button or close button
+            $('#closePopup, #closePopupButton').click(function () {
+                popupMessage.fadeOut();
+            });
+
+            // Optionally close the popup after 5 seconds
+            setTimeout(function () {
+                popupMessage.fadeOut();
+            }, 5000);
+        }
+         // Set required fields for Villas
+         function setVillaValidation() {
+             document.getElementById("Location").required = true;
+             document.getElementById("Space").required = true;
+             document.getElementById("NumberOfRooms").required = true;
+             document.getElementById("NumberOfBathrooms").required = true;
+             document.getElementById("NumberOfFloors").required = true;
+             document.getElementById("Price").required = true;
+         }
+
+         // Set required fields for Apartments
+         function setApartmentValidation() {
+             document.getElementById("Location").required = true;
+             document.getElementById("Space").required = true;
+             document.getElementById("NumberOfRooms").required = true;
+             document.getElementById("NumberOfBathrooms").required = true;
+             document.getElementById("FloorNumber").required = true;
+             document.getElementById("Price").required = true;
+         }
+
+         // Set required fields for Lands
+         function setLandValidation() {
+             document.getElementById("Location").required = true;
+             document.getElementById("Space").required = true;
+             document.getElementById("LandType").required = true;
+             document.getElementById("Price").required = true;
+         }
+
+         // Validate form before submission
+         function validateForm() {
+             // const form = document.getElementById("propertyForm");
+             // return form.checkValidity(); // Returns true if the form is valid
+             debugger
+                   let isValid = true;
+
+         // Clear previous error messages
+           document.querySelectorAll('.text-danger.js-validation').forEach(el => el.remove());
+
+         // Get all form fields
+         const form = document.getElementById("propertyForm");
+         const requiredFields = form.querySelectorAll("[required]");
+
+         requiredFields.forEach(field => {
+             if (!field.checkValidity()) {
+                 const label = field.closest('div').querySelector('label');
+                 const labelText = label ? label.innerText : field.name || field.id;
+                 if('@IsEnlish' === true)
+                 {
+                       showError(field.id, `${labelText} is required.`);
+                 }
+                 else    {
+                   showError(field.id, `${labelText} مطلوب.`);
+                 }
+
+                 isValid = false;
+             }
+             else    {
+                   removeError(field.id);
+             }
+         });
+
+         return isValid;
+
+         }
+
+         function showPropertyFields() {
+             const selected = document.getElementById('propertyType').value;
+             const types = ['lands', 'Apartments', 'Villas'];
+             document.getElementById('commonFields').classList.add('d-none');
+             document.getElementById('mediaUploadSection').classList.add('d-none');
+
+             types.forEach(type => {
+                 document.getElementById(type + 'Fields').classList.add('d-none');
+             });
+
+             if (types.includes(selected)) {
+                 document.getElementById(selected + 'Fields').classList.remove('d-none');
+                 document.getElementById('commonFields').classList.remove('d-none');
+                 document.getElementById('mediaUploadSection').classList.remove('d-none');
+             }
+         }
+    </script>
+}

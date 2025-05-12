@@ -89,8 +89,17 @@ body {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.fontsize {
+    font-size: 15px;
+    font-weight: bold;
+}
+.checkboxstyle {
+    display:  flex !important;
+    gap: 29px;
+}
 .directionrtl {
-    direction: rtl;
+    direction: rtl !important;
 }
 hr {
   margin: 1rem 0;
@@ -148,7 +157,198 @@ abbr[data-bs-original-title] {
   text-decoration: underline dotted;
   cursor: help;
   text-decoration-skip-ink: none; }
+/* Modal background */
+.popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
+}
 
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Modal content */
+.popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 25px;
+    border-radius: 12px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    animation: slideUp 0.5s ease-in-out; /* Slide-up animation */
+}
+
+/* Slide-up animation */
+@keyframes slideUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Popup header */
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .popup-header h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+    }
+
+/* Overlay */
+.overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 9999; /* Make sure it appears above all other elements */
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light gray background */
+    border-top: 8px solid #3498db; /* Blue spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner rotation animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Close button */
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: #000;
+    }
+
+/* Popup message text */
+.popup-content p {
+    font-size: 16px;
+    color: #555;
+    margin: 20px 0;
+}
+/* Loading Spinner */
+.loading-spinner {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light gray background */
+    border-top: 8px solid #3498db; /* Blue spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner rotation animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Action button */
+.popup-btn {
+    background-color: #4CAF50; /* Default green for success */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .popup-btn:hover {
+        background-color: #45a049;
+    }
+
+    .popup-btn:focus {
+        outline: none;
+    }
+
+/* Success and Error color schemes */
+.success .popup-content {
+    border-left: 5px solid #4CAF50;
+}
+
+.error .popup-content {
+    border-left: 5px solid #f44336;
+}
+
+.language {
+    font-size: 14px;
+    padding: 22px 15px;
+    display: inline-block;
+    text-decoration: none !important;
+    color: rgba(255, 255, 255, 0.5);
+    float: right !important;
+}
 address {
   margin-bottom: 1rem;
   font-style: normal;
@@ -10330,7 +10530,7 @@ nav[aria-label="breadcrumb"] li:before {
     text-align: -webkit-right;
     font-size: 14px;
     color: #888;
-    padding: 70px 0;
+    padding: 25px 0;
 }
   .site-footer a {
     color: #777;
