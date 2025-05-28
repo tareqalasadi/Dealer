@@ -131,5 +131,6 @@
   "villasDetails": "Villa Details",
   "DescreptionEn": "Descreption English",
   "DescreptionAr": "Descreption Arabic",
-  "TakePictureOfProperty": "Would you like us to come and take professional photos of your property?"
+  "TakePictureOfProperty": "Would you like us to come and take professional photos of your property?",
+  "SuggestedReplies": "If the real estate price is below 50,000 JOD, a 500 JOD commission applies upon sale. If the price exceeds 50,000 JOD, a 1% commission on the real estate price will apply."
 }

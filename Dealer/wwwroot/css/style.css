@@ -231,6 +231,7 @@ abbr[data-bs-original-title] {
     color: #555;
     margin: 20px 0;
 }
+
 /* Loading Spinner */
 
 /* Overlay */
@@ -244,64 +245,38 @@ abbr[data-bs-original-title] {
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
     z-index: 9999; /* Make sure it appears above all other elements */
 }
-
-/* Loading Spinner */
 .loading-spinner {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10000;
-}
-
-.spinner {
-    border: 8px solid #f3f3f3; /* Light gray background */
-    border-top: 8px solid #3498db; /* Blue spinner */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-/* Spinner rotation animation */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.loading-spinner {
-    display: none; /* Hidden by default */
+    display: flex; /* THIS LINE IS CRUCIAL for centering */
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-    z-index: 9999;
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+.loading-spinner {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
 }
 
+    .loading-spinner.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
 .spinner {
-    border: 8px solid #f3f3f3; /* Light gray background */
-    border-top: 8px solid #3498db; /* Blue spinner */
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
     border-radius: 50%;
     width: 50px;
     height: 50px;
     animation: spin 1s linear infinite;
 }
 
-/* Spinner rotation animation */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -311,6 +286,7 @@ abbr[data-bs-original-title] {
         transform: rotate(360deg);
     }
 }
+
 
 /* Action button */
 .popup-btn {
@@ -685,6 +661,7 @@ progress {
 .img-fluid {
     max-width: 100%;
     min-height: 303px !important;
+    max-height: 303px !important;
 }
 
 .language {

@@ -39,7 +39,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
         new CultureInfo("ar-JO")
     };
 
-    options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+    options.DefaultRequestCulture = new RequestCulture(culture: "ar-JO", uiCulture: "ar-JO");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });

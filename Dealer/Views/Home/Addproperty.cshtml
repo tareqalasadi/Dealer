@@ -202,7 +202,18 @@
                     </div>
                 </div>
             </div>
-
+@* 
+            <div class="mb-3" id="suggestedReplies">
+                <label class="form-label fw-semibold">@LocalizationManager["SuggestedReplies"]</label>
+            </div> *@
+            <div class="mb-3 alert alert-info" >
+                <label class="form-label fw-semibold mb-0">
+                    <i class="bi bi-info-circle-fill me-2"></i> @LocalizationManager["SuggestedReplies"]
+                </label>
+                <div class="mt-1">
+                    @LocalizationManager["SuggestedRepliesNote"] <!-- Add a localized message like: "These replies can help you respond quickly." -->
+                </div>
+            </div>
             <!-- Submit Button -->
             <div class="text-center">
                 <button type="submit" class="btn btn-primary btn-lg px-5">@LocalizationManager["SubmitProperty"]</button>
@@ -248,7 +259,6 @@
 
              } else {
                                   document.getElementById("ImageUpload").required = true;
-                  document.getElementById("VideoUpload").required = true;
              }
          });
 
@@ -290,7 +300,8 @@
          });
                  document.getElementById("propertyForm").addEventListener("submit", function (e) {
             // Show loading spinner before AJAX call
-            $('#loadingSpinner').show();
+         $('#loadingSpinner').addClass('show');
+
                 $('.overlay').show();
             e.preventDefault(); // Prevent form from submitting the usual way
 
@@ -318,7 +329,6 @@
             // Image and video validation based on TakePicture checkbox
             if (!takePictureChecked) {
                 document.getElementById("ImageUpload").required = true;
-                document.getElementById("VideoUpload").required = true;
             }
 
             // Validate the form
@@ -335,23 +345,24 @@
                     success: function (response) {
                         // Hide the loading spinner after success
                         debugger
-                        $('#loadingSpinner').hide();
-                            $('.overlay').hide();
+        $('#loadingSpinner').removeClass('show');
+                                    $('.overlay').hide();
                                             document.getElementById("propertyForm").reset();
 
                         showPopupMessage('Success: Property added successfully!', 'success');
                     },
                     error: function () {
                         // Hide the loading spinner after error
-                        $('#loadingSpinner').hide();
-                            $('.overlay').hide();
+        $('#loadingSpinner').removeClass('show');
+                                    $('.overlay').hide();
                         showPopupMessage('Error: There was an issue adding the property. Please try again.', 'error');
                     }
                 });
             } else {
                     $('.overlay').hide();
                 // Hide the loading spinner if the form is not valid (optional)
-                $('#loadingSpinner').hide();
+              $('#loadingSpinner').removeClass('show');
+
             }
         });
 
@@ -435,7 +446,7 @@
              if (!field.checkValidity()) {
                  const label = field.closest('div').querySelector('label');
                  const labelText = label ? label.innerText : field.name || field.id;
-                 if('@IsEnlish' === true)
+                 if('@IsEnlish' === 'True')
                  {
                        showError(field.id, `${labelText} is required.`);
                  }
